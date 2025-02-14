@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #ffebee;
+      font-family: 'Arial', sans-serif;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 90%;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #ff4081;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesButton {
+      background-color: #ff4081;
+      color: white;
+    }
+
+    #noButton {
+      background-color: #e0e0e0;
+      color: black;
+    }
+
+    #yesButton.big {
+      transform: scale(1.2);
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    #noMessage {
+      font-size: 16px;
+      color: #ff4081;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* Mobile-specific styles */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      .buttons {
+        gap: 10px;
+      }
+
+      .buttons button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      .message {
+        font-size: 16px;
+      }
+
+      #noMessage {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Introduction Page -->
+  <div id="introPage" class="container">
+    <h1>Happy Valentine's Babi! 💖</h1>
+    <button id="proceedButton">Let's Go!</button>
+  </div>
+
+  <!-- Date Proposal Page -->
+  <div id="datePage" class="container" style="display: none;">
+    <h1>Would you like to go on a date?</h1>
+    <div id="noMessage"></div>
+    <div class="buttons">
+      <button id="yesButton">Yes</button>
+      <button id="noButton">No</button>
+    </div>
+    <div id="dateMessage" class="message">
+      <p>Yay! 💖 Let's celebrate our love on <strong>February 14th</strong>.</p>
+      <p>We'll have dinner at <strong>7:00 PM</strong> at <strong>The Romantic Bistro</strong>.</p>
+      <p>Can't wait to see you there! 🥰</p>
+    </div>
+  </div>
+
+  <script>
+    const introPage = document.getElementById('introPage');
+    const datePage = document.getElementById('datePage');
+    const proceedButton = document.getElementById('proceedButton');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const dateMessage = document.getElementById('dateMessage');
+    const noMessage = document.getElementById('noMessage');
+
+    const noMessages = [
+      "Woah",
+      "Nah uhh",
+      "You don't love me?",
+      "Really? 😢",
+      "I'm not giving up!",
+      "Just say yes already!",
+      "Pretty please? 🥺",
+      "You're breaking my heart 💔",
+    ];
+
+    let noClickCount = 0;
+
+    // Switch to the date proposal page
+    proceedButton.addEventListener('click', () => {
+      introPage.style.display = 'none';
+      datePage.style.display = 'block';
+    });
+
+    // Handle "Yes" button click
+    yesButton.addEventListener('click', () => {
+      // Display the date message
+      dateMessage.style.display = 'block';
+      // Hide the buttons and no message
+      yesButton.style.display = 'none';
+      noButton.style.display = 'none';
+      noMessage.style.display = 'none';
+    });
+
+    // Handle "No" button click
+    noButton.addEventListener('click', () => {
+      // Display the next "No" message
+      noMessage.textContent = noMessages[noClickCount % noMessages.length];
+      noMessage.style.display = 'block';
+      noClickCount++;
+
+      // Increase the size of the "Yes" button
+      const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+      yesButton.style.fontSize = `${currentSize * 1.2}px`;
+
+      // Reduce the size of the "No" button until it disappears
+      const currentNoSize = parseFloat(window.getComputedStyle(noButton).fontSize);
+      if (currentNoSize > 5) {
+        noButton.style.fontSize = `${currentNoSize * 0.8}px`;
+      } else {
+        noButton.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
